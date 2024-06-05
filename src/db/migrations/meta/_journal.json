@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1717430812176,
+      "tag": "0000_brainy_greymalkin",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1717430950531,
+      "tag": "0001_powerful_gravity",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1717596861406,
+      "tag": "0002_unknown_malice",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1717605914349,
+      "tag": "0003_worried_hellcat",
+      "breakpoints": true
+    }
+  ]
+}
