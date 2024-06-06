@@ -85,11 +85,27 @@ const updateEmailValidator = z.object({
   }),
 });
 
+const resetPasswordValidator = z.object({
+  email: z.string({ required_error: "Email is required!" }).email({
+    message: "Email input is not a valid email. Please correct and try again.",
+  }),
+  newPassword: z
+    .string({
+      invalid_type_error: "Password must be a string",
+      required_error: "Password is required!",
+    })
+    .min(6, { message: "Minimum of 6 characters are allowed" }),
+  otp: z
+    .number({ invalid_type_error: "OTP should be a number" })
+    .min(100000, { message: "Invalid OTP value" }),
+});
+
 export const v = {
   registrationValidator,
   emailValidator,
   updateEmailValidator,
   updatePasswordValidator,
   updateValidator,
+  resetPasswordValidator,
   loginValidator,
 };

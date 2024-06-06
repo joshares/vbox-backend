@@ -27,6 +27,12 @@ export type UserUpdatePasswordRequest = {
   newPassword: string;
 };
 
+export type UserResetPasswordRequest = {
+  email: string;
+  otp: number;
+  newPassword: string;
+};
+
 export type UserUpdateRequest = {
   firstName?: string;
   lastName?: string;

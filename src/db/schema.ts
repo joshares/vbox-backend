@@ -22,9 +22,6 @@ export const user = pgTable("users", {
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow(),
   role: roles("roles").default("user"),
-  // hasCreatedPasswordForAccount: boolean(
-  //   "has_created_password_for_account"
-  // ).default(false),
   isVerified: boolean("is_verified").default(false),
 });
 

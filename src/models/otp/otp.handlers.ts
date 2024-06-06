@@ -9,10 +9,10 @@ import { NotFoundError } from "../../errors";
 const sendOTP: Handler = async (req, res, next) => {
   try {
     const { email } = v.createOTPValidator.parse(req.query);
-    const customer = await userRepository.getUserDetails(email);
-    if (!customer)
+    const user = await userRepository.getUserDetails(email);
+    if (!user)
       throw new NotFoundError(
-        `Customer with email ${email} does not exist in the DB. Please create an account`
+        `User with email ${email} does not exist in the DB. Please create an account`
       );
     const otpDetails = await otpRepository.createOTP(email);
     // await sendOTPEmail
@@ -20,7 +20,7 @@ const sendOTP: Handler = async (req, res, next) => {
     if (otpDetails) {
       const response = await sendOTPEmail({
         otp: otpDetails.otp,
-        name: `${customer.firstName} ${customer.lastName}`,
+        name: `${user.firstName} ${user.lastName}`,
         subscriberMail: email,
       });
       if (response) {

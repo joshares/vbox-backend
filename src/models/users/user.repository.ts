@@ -3,6 +3,7 @@ import { ctx } from "../../ctx";
 import {
   UserDeleteRequest,
   UserRegisterRequest,
+  UserResetPasswordRequest,
   UserUpdateEmailRequest,
   UserUpdatePasswordRequest,
   UserUpdateRequest,
@@ -32,6 +33,13 @@ const register = async (userRequest: UserRegisterRequest) => {
 const getUserDetails = async (userEmail: string) => {
   const user = await ctx.db.query.user.findFirst({
     where: eq(userTable.email, userEmail),
+    columns: { password: false },
+  });
+  return user;
+};
+const getUserDetailsToken = async (userId: string) => {
+  const user = await ctx.db.query.user.findFirst({
+    where: eq(userTable.id, userId),
     columns: { password: false },
   });
   return user;
@@ -71,16 +79,28 @@ const updateUser = async (userRequest: UserUpdateRequest) => {
 //   return customer;
 // };
 
-// const updateCustomerPassword = async (
-//   customerRequest: CustomerUpdatePasswordRequest
-// ) => {
-//   const [customer] = await ctx.db
-//     .update(customerTable)
-//     .set({ password: customerRequest.newPassword })
-//     .where(eq(customerTable.email, customerRequest.email))
-//     .returning(customerValues);
-//   return customer;
-// };
+const updateUserPassword = async (userRequest: UserUpdatePasswordRequest) => {
+  const [user] = await ctx.db
+    .update(userTable)
+    .set({
+      password: userRequest.newPassword,
+      updatedAt: new Date().toISOString(),
+    })
+    .where(eq(userTable.email, userRequest.email))
+    .returning(userValues);
+  return user;
+};
+const resetUserPassword = async (userRequest: UserResetPasswordRequest) => {
+  const [user] = await ctx.db
+    .update(userTable)
+    .set({
+      password: userRequest.newPassword,
+      updatedAt: new Date().toISOString(),
+    })
+    .where(eq(userTable.email, userRequest.email))
+    .returning(userValues);
+  return user;
+};
 
 const getUserPassword = async (email: string) => {
   const userPassword = await ctx.db.query.user.findFirst({
@@ -94,12 +114,8 @@ export const userRepository = {
   register,
   getUserPassword,
   getUserDetails,
+  getUserDetailsToken,
   updateUser,
-  // listCustomer,
-  // deleteCustomer,
-  // getCustomerPassword,
-  // updateCustomer,
-  // updateCustomerEmail,
-  // updateCustomerPassword,
-  // getCustomerDetails,
+  updateUserPassword,
+  resetUserPassword,
 };
